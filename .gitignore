@@ -1,0 +1,70 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# SC-CraftX .gitignore
+# ═══════════════════════════════════════════════════════════════════════════
+
+# ── Environment & Secrets ──────────────────────────────────────────────────
+.env
+credentials.json
+*.key
+*.secret
+
+# ── Python ─────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ── Virtual Environment ────────────────────────────────────────────────────
+venv/
+ENV/
+env/
+.venv
+
+# ── IDE ────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ── Database ───────────────────────────────────────────────────────────────
+*.db
+*.db-shm
+*.db-wal
+cache.db*
+
+# ── Logs ───────────────────────────────────────────────────────────────────
+logs/
+*.log
+
+# ── PyInstaller ────────────────────────────────────────────────────────────
+*.spec
+dist/
+build/
+
+# ── Test & Coverage ────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── Project Specific ───────────────────────────────────────────────────────
+prices_database.json.backup
+favorites.json.backup
+.claude/
