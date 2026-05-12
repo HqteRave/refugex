@@ -57,7 +57,7 @@ RefugeX/
 
 Проект работает через официальный STALCRAFT API:
 
-urlSTALCRAFT APIhttps://eapi.stalcraft.net/
+https://eapi.stalcraft.net/
 
 Используется:
 
