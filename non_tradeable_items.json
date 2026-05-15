@@ -1,0 +1,410 @@
+{
+  "version": "1.1",
+  "scan_date": "2026-05-15",
+  "database_updated": "2026-05-11",
+  "source": "stalcraft-database (EXBO-Studio/stalcraft-database)",
+  "total_non_tradeable": 55,
+  "statistics": {
+    "PERSONAL_ON_GET": 5,
+    "PERSONAL_DROP_ON_GET": 50
+  },
+  "categories": {
+    "misc": 5,
+    "other": 50
+  },
+  "items": [
+    {
+      "id": "55j6o",
+      "name": "Часть схемы: АЕК-965",
+      "category": "misc",
+      "status": "PERSONAL_ON_GET"
+    },
+    {
+      "id": "q0p34",
+      "name": "Часть «Азимут»",
+      "category": "misc",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "ol6z5",
+      "name": "Часть схемы: «Инвертор»",
+      "category": "misc",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "j0wzl",
+      "name": "Часть «Апогей»",
+      "category": "misc",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "z3n0k",
+      "name": "Часть схемы: DSA RPD",
+      "category": "misc",
+      "status": "PERSONAL_ON_GET"
+    },
+    {
+      "id": "9dknl",
+      "name": "Болотный камень",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "olzr6",
+      "name": "Фрагмент данных «Бета»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "krznp",
+      "name": "Маячок группы «Лямбда»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "vn0yr",
+      "name": "Остатки радиопередатчика",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "j0z30",
+      "name": "Срачник",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "9d1qy",
+      "name": "Аномальная батарея",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "77o96",
+      "name": "Дурман-камень",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "21365",
+      "name": "Лимб",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "vn0wr",
+      "name": "Вещество 07270",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "w3022",
+      "name": "Маячок группы «Гамма»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "q03dj",
+      "name": "Кислотная крапива",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "191ng",
+      "name": "Фрагмент данных «Гамма»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "l09qk",
+      "name": "Фрагмент данных «Дельта»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "rj6ov",
+      "name": "Хлорник",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "w30g2",
+      "name": "Корень-вонючка",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "dr6nj",
+      "name": "Рыжий папоротник",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "21gkl",
+      "name": "Остатки пси-маячка",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "009o9",
+      "name": "Подозоновик",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "kr5ky",
+      "name": "Маячок группы «Альфа»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "34305",
+      "name": "Горьколистник",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "0r52r",
+      "name": "Ветка рябины",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "9dk7l",
+      "name": "Аномальная сыворотка",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "z30qy",
+      "name": "Синие дрожжи",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "19402",
+      "name": "Лимбоплазма",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "gn9l6",
+      "name": "Рассольник",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "z30mm",
+      "name": "Записи майора Д.",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "y405k",
+      "name": "Семечки",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "9dz1z",
+      "name": "Светящаяся слизь",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "34zjl",
+      "name": "Фрагмент данных «Дигамма»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "rw32l",
+      "name": "Ледяной осколок",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "21gpl",
+      "name": "Маячок группы «Бета»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "77ov6",
+      "name": "Квантовая батарея",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "kr54y",
+      "name": "Рачки",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "6ol3p",
+      "name": "Северный мох",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "9dkgl",
+      "name": "Остатки аккумуляторов",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "nkgv1",
+      "name": "Кусок адского угля",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "pj52w",
+      "name": "Росток чернобыльской ромашки",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "j0zy0",
+      "name": "Поврежденные микросхемы",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "l093k",
+      "name": "Ржавая плесень",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "kr5oy",
+      "name": "Остатки алюминиевого кабеля",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "y4y13",
+      "name": "Маячок группы «Дигамма»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "7lwvj",
+      "name": "Расписка от Шамана",
+      "category": "other",
+      "status": "PERSONAL_ON_GET"
+    },
+    {
+      "id": "mr1jy",
+      "name": "Остатки научного оборудования",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "191kg",
+      "name": "Зеленая плесень",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "00rny",
+      "name": "Фракционный талон",
+      "category": "other",
+      "status": "PERSONAL_ON_GET"
+    },
+    {
+      "id": "96kkq",
+      "name": "Расписка от Липы",
+      "category": "other",
+      "status": "PERSONAL_ON_GET"
+    },
+    {
+      "id": "556z1",
+      "name": "Фрагмент данных «Альфа»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "rj6gv",
+      "name": "Остатки медной проволоки",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "6o7m0",
+      "name": "Фрагмент данных «Лямбда»",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    },
+    {
+      "id": "m0lmr",
+      "name": "Ипсилон данные",
+      "category": "other",
+      "status": "PERSONAL_DROP_ON_GET"
+    }
+  ],
+  "ids_only": [
+    "009o9",
+    "00rny",
+    "0r52r",
+    "191kg",
+    "191ng",
+    "19402",
+    "21365",
+    "21gkl",
+    "21gpl",
+    "34305",
+    "34zjl",
+    "556z1",
+    "55j6o",
+    "6o7m0",
+    "6ol3p",
+    "77o96",
+    "77ov6",
+    "7lwvj",
+    "96kkq",
+    "9d1qy",
+    "9dk7l",
+    "9dkgl",
+    "9dknl",
+    "9dz1z",
+    "dr6nj",
+    "gn9l6",
+    "j0wzl",
+    "j0z30",
+    "j0zy0",
+    "kr54y",
+    "kr5ky",
+    "kr5oy",
+    "krznp",
+    "l093k",
+    "l09qk",
+    "m0lmr",
+    "mr1jy",
+    "nkgv1",
+    "ol6z5",
+    "olzr6",
+    "pj52w",
+    "q03dj",
+    "q0p34",
+    "rj6gv",
+    "rj6ov",
+    "rw32l",
+    "vn0wr",
+    "vn0yr",
+    "w3022",
+    "w30g2",
+    "y405k",
+    "y4y13",
+    "z30mm",
+    "z30qy",
+    "z3n0k"
+  ],
+  "important_notes": [
+    "Анаболик «STARK» (7lyd3) ТОРГУЕТСЯ - статус NON_DROP, а не PERSONAL",
+    "Мякоть ТОРГУЕТСЯ - нет статуса PERSONAL",
+    "Квестовые дропы НЕ ТОРГУЮТСЯ - части схем, маячки, фрагменты данных",
+    "Части схем оружия НЕ ТОРГУЮТСЯ - статус PERSONAL_ON_GET"
+  ]
+}

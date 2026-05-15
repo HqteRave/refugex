@@ -1,12 +1,12 @@
 """
-api_v2/client.py — Асинхронный клиент для Stalcraft API на базе scapi
+api_v2/client.py — Улучшенный асинхронный клиент для Stalcraft API
 
-Использует официальную библиотеку scapi (stalcraft-api v2.1.1):
-  - AppClient для работы с API
-  - Асинхронная обёртка через asyncio.to_thread
-  - Автоматическое управление токенами
-  - Умная обработка rate limits
-  - Кэширование и история цен
+ОБНОВЛЕНИЯ v2.1.2:
+  - Использует scapi 2.1.2 (последняя версия)
+  - DatabaseLookup для поиска предметов по названию
+  - Автоматический rate limiting через rate_limit_info
+  - Pydantic модели для типизации ответов
+  - Поддержка OAuth 2.0 для User API
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ import logging
 from datetime import datetime, timezone
 from typing import Optional, Callable
 
-from scapi import AppClient
+from scapi import AppClient, DatabaseLookup
 from scapi.enums import Region
 from scapi.exceptions import (
     ScApiException,
@@ -84,6 +84,9 @@ class StalcraftClient:
         # scapi клиент (синхронный, обернём в async)
         self._client: Optional[AppClient] = None
         
+        # DatabaseLookup для поиска предметов (НОВОЕ!)
+        self._db_lookup: Optional[DatabaseLookup] = None
+        
         # Rate limiting
         self._semaphore = asyncio.Semaphore(Settings.MAX_CONCURRENT_REQUESTS)
         self._last_request_time = 0.0
@@ -122,7 +125,11 @@ class StalcraftClient:
         
         self._client = await asyncio.to_thread(_create_client)
         
+        # Инициализируем DatabaseLookup (НОВОЕ!)
+        self._db_lookup = DatabaseLookup()
+        
         log.info(f"Stalcraft API подключен (регион: {self.region.value})")
+        log.info(f"DatabaseLookup загружен ({len(self._db_lookup._items)} предметов)")
     
     async def close(self) -> None:
         """Закрытие соединений"""
@@ -538,6 +545,46 @@ class StalcraftClient:
         )
         
         return results
+
+
+    # ═══════════════════════════════════════════════════════════════════════
+    # DatabaseLookup методы (НОВОЕ!)
+    # ═══════════════════════════════════════════════════════════════════════
+    
+    def search_items(self, query: str) -> list[dict]:
+        """
+        Поиск предметов по названию через DatabaseLookup
+        
+        Args:
+            query: Поисковый запрос (название предмета)
+        
+        Returns:
+            Список найденных предметов
+        
+        Example:
+            >>> items = client.search_items("анаболик")
+            >>> print(items[0])
+            {'id': '7lyd3', 'name': 'Анаболик «STARK»', 'category': 'medicine'}
+        """
+        if not self._db_lookup:
+            return []
+        
+        return self._db_lookup.search(query)
+    
+    def get_item_info(self, item_id: str) -> Optional[dict]:
+        """
+        Получить информацию о предмете по ID
+        
+        Args:
+            item_id: ID предмета
+        
+        Returns:
+            Информация о предмете или None
+        """
+        if not self._db_lookup:
+            return None
+        
+        return self._db_lookup.get(item_id)
 
 
 # ═══════════════════════════════════════════════════════════════════════════

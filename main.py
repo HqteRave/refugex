@@ -1,12 +1,11 @@
-XX"""
-CraftEx - STALCRAFT Market Tracker
-"""
 import sys
 import traceback
 import first_run
+
 first_run.init()
 
 from settings import configure_logging
+
 configure_logging()
 
 from app_paths import app_path, asset_path
@@ -14,6 +13,7 @@ from app_paths import app_path, asset_path
 
 def _install_crash_handler():
     import datetime, os
+
     log_path = app_path("crash.log")
 
     def _handler(exc_type, exc_value, exc_tb):

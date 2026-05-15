@@ -45,11 +45,22 @@ class AsyncWorker(QThread):
         try:
             self.result = self._loop.run_until_complete(self._coro_factory())
             self.finished.emit()
+        except asyncio.CancelledError:
+            # Задача отменена - это нормально
+            log.debug("AsyncWorker cancelled")
+        except RuntimeError as e:
+            if "Event loop stopped" in str(e):
+                # Loop остановлен извне - не ошибка
+                log.debug("AsyncWorker stopped: %s", e)
+            else:
+                log.error("AsyncWorker runtime error: %s", e, exc_info=True)
+                self.error.emit(str(e))
         except Exception as e:
             log.error("AsyncWorker error: %s", e, exc_info=True)
             self.error.emit(str(e))
         finally:
             try:
+                # Отменяем все оставшиеся задачи
                 pending = asyncio.all_tasks(self._loop)
                 for t in pending:
                     t.cancel()
@@ -59,11 +70,19 @@ class AsyncWorker(QThread):
                     )
             except Exception:
                 pass
-            self._loop.close()
+            finally:
+                self._loop.close()
 
     def stop(self):
+        """Безопасная остановка worker'а."""
         if self._loop and not self._loop.is_closed():
-            self._loop.call_soon_threadsafe(self._loop.stop)
+            # Отменяем все задачи вместо жёсткой остановки loop
+            try:
+                pending = asyncio.all_tasks(self._loop)
+                for task in pending:
+                    self._loop.call_soon_threadsafe(task.cancel)
+            except Exception:
+                pass
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -403,7 +422,7 @@ class PriceSyncManager(QObject):
             # ФИКС: Ждём завершения всех воркеров перед созданием новых
             for w in list(self._workers):
                 if w.isRunning():
-                    w.wait(100)  # Ждём макс 100мс
+                    w.wait(500)  # Увеличен таймаут до 500мс
             self._workers.clear()
             self._is_syncing = False
 

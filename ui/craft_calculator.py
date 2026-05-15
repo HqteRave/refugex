@@ -26,6 +26,7 @@ from ui.liquidity_indicator import LiquidityWithText
 from ui.star_button import StarButton
 from favorites_manager import get_favorites_manager
 from app_paths import asset_path
+from non_tradeable_items import is_tradeable
 
 _RECIPES_FILE = asset_path("recipes_calculator.json")
 AUCTION_FEE   = 0.05
@@ -791,7 +792,11 @@ class CraftCalculator(QWidget):
         try:
             with open(_RECIPES_FILE, "r", encoding="utf-8") as f:
                 raw = json.load(f)
-            self._recipes = {k: v for k, v in raw.items() if v.get("craft")}
+            # Фильтруем непродаваемые предметы
+            self._recipes = {
+                k: v for k, v in raw.items() 
+                if v.get("craft") and is_tradeable(k)
+            }
         except FileNotFoundError:
             self._count_lbl.setText("❌ recipes_calculator.json не найден!")
             return
