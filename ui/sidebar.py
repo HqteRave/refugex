@@ -158,35 +158,12 @@ class Sidebar(QFrame):
         row.setContentsMargins(28, 0, 10, 0)
         row.setSpacing(6)
 
-        # Для Избранного - иконка звезды, для Лучшего - без иконки
-        if is_favorites:
-            # Добавляем иконку favorite.svg
-            icon_w = SvgIcon("favorite", 14)
-            icon_w.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
-            row.addWidget(icon_w)
-        elif is_best:
-            # Только текст, без иконки
-            pass
-        else:
-            # Обычная логика для остальных категорий
-            use_arrow = (icon_file == "")
-            
-            if not use_arrow:
-                svg_path = _svg_path(icon_file)
-                if os.path.exists(svg_path):
-                    icon_w = SvgIcon(icon_file, 14)
-                    icon_w.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
-                    row.addWidget(icon_w)
-                else:
-                    use_arrow = True  # Если SVG не найден - тоже стрелка
-            
-            if use_arrow:
-                # Стрелка для "Все рецепты" и подобных
-                spacer = QLabel("⭢")
-                spacer.setFixedWidth(14)
-                spacer.setStyleSheet("color: #6b7280; font-size: 14px; background: transparent;")
-                spacer.setAlignment(Qt.AlignmentFlag.AlignCenter)
-                row.addWidget(spacer)
+        # Всегда только точка для всех подкатегорий
+        spacer = QLabel("·")
+        spacer.setFixedWidth(14)
+        spacer.setStyleSheet("color: #6b7280; font-size: 20px; font-weight: bold; background: transparent;")
+        spacer.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        row.addWidget(spacer)
 
         lbl = QLabel(label)
         lbl.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
@@ -198,6 +175,7 @@ class Sidebar(QFrame):
     def _add_category(self, cat_name: str, data: dict):
         icon_file = data.get("icon_file", "")
         is_calculator = data.get("is_calculator", False)
+        is_direct = data.get("is_direct", False)  # НОВОЕ: прямые категории
         
         # Для калькулятора используем специальную кнопку
         if is_calculator:
@@ -207,6 +185,20 @@ class Sidebar(QFrame):
             
         self._cat_btns[cat_name] = btn
 
+        # НОВОЕ: Для прямых категорий (Еда, Напитки и т.д.)
+        if is_direct:
+            cat_key = data["cat_key"]
+            items = data.get("items", [])
+            
+            # Клик сразу показывает предметы
+            btn.clicked.connect(
+                lambda _, cn=cat_name, it=items, ck=cat_key:
+                    self._select_direct(cn, it, ck)
+            )
+            self._layout.addWidget(btn)
+            return  # Не создаём sub_frame для прямых категорий
+
+        # Обычная логика с подкатегориями
         sub_frame = QWidget()
         sub_frame.setStyleSheet("background: transparent;")
         sub_layout = QVBoxLayout(sub_frame)
@@ -264,6 +256,25 @@ class Sidebar(QFrame):
         # Для калькулятора не добавляем sub_frame
         if not is_calculator:
             self._layout.addWidget(sub_frame)
+    
+    def _select_direct(self, cat_name: str, items: list, cat_key: str):
+        """Прямая активация категории без подкатегорий (Еда, Напитки и т.д.)"""
+        # Сбрасываем активность подкатегорий
+        if self._active_sub:
+            self._active_sub.setProperty("active", False)
+            self._active_sub.style().unpolish(self._active_sub)
+            self._active_sub.style().polish(self._active_sub)
+            self._active_sub = None
+        
+        # Активируем кнопку категории
+        for name, btn in self._cat_btns.items():
+            btn.setProperty("active", name == cat_name)
+            btn.style().unpolish(btn)
+            btn.style().polish(btn)
+        
+        if self._on_select:
+            # Используем имя категории как sub_name
+            self._on_select(cat_name, cat_key, items, is_best=False)
 
     def _toggle_cat(self, cat_name: str, sub_frame: QWidget):
         visible = sub_frame.isVisible()

@@ -53,6 +53,7 @@ from ui.main_window import MainWindow
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon(asset_path("assets", "app_icon.ico")))
+    app.setApplicationName("RefugeX")
     window = MainWindow()
     window.show()
     sys.exit(app.exec())

@@ -43,7 +43,7 @@ def _normalize_item(item: dict) -> dict:
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("CraftEx")
+        self.setWindowTitle("RefugeX")
         self.setMinimumSize(1100, 680)
         self.resize(1360, 780)
 
@@ -82,7 +82,10 @@ class MainWindow(QMainWindow):
             if data.get("is_best") or data.get("is_favorites"):
                 continue
             cat_key = data["cat_key"]
-            for items in data["subcategories"].values():
+            
+            # Поддержка прямых категорий (is_direct)
+            if data.get("is_direct"):
+                items = data.get("items", [])
                 for item in items:
                     real_id = item.get("item_id") or item.get("id", "")
                     if real_id not in seen:
@@ -92,6 +95,18 @@ class MainWindow(QMainWindow):
                             "name":    item.get("name", ""),
                             "cat_key": cat_key,
                         })
+            else:
+                # Обычные категории с подкатегориями
+                for items in data.get("subcategories", {}).values():
+                    for item in items:
+                        real_id = item.get("item_id") or item.get("id", "")
+                        if real_id not in seen:
+                            seen.add(real_id)
+                            result.append({
+                                "item_id": real_id,
+                                "name":    item.get("name", ""),
+                                "cat_key": cat_key,
+                            })
         return result
 
     # ── Построение UI ─────────────────────────────────────────────────────
@@ -171,7 +186,7 @@ class MainWindow(QMainWindow):
                 p.drawText(self_.rect(), Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft, self_.text())
                 p.end()
 
-        title = NeonLabel("CraftEx")
+        title = NeonLabel("RefugeX")
 
         sub = QLabel("Твой помощник в крафтах и торговле!")
         sub.setObjectName("headerSub")
@@ -658,6 +673,10 @@ class MainWindow(QMainWindow):
         self._apply_filters()
 
     def _update_counts(self, visible: int = None):
+        # Не показываем счётчики в режиме калькулятора
+        if self._calculator_widget and self._calculator_widget.isVisible():
+            return
+            
         total = len(self._cards)
 
         if self._current_is_favorites:
