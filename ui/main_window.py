@@ -12,9 +12,19 @@ from PyQt6.QtWidgets import (
     QMenu,
 )
 from PyQt6.QtCore import Qt, QTimer, QThread, pyqtSignal
-from PyQt6.QtGui import QAction, QPixmap, QIcon, QPainter, QColor, QFont, QPainterPath, QImage
+from PyQt6.QtGui import (
+    QAction,
+    QPixmap,
+    QIcon,
+    QPainter,
+    QColor,
+    QFont,
+    QPainterPath,
+    QImage,
+)
 
 import theme_manager
+
 theme_manager.init()
 
 from ui.styles import build_style
@@ -33,7 +43,7 @@ def _normalize_item(item: dict) -> dict:
     """items_full.json использует 'id', ItemCard ожидает 'item_id'."""
     return {
         "item_id": item.get("item_id") or item.get("id", ""),
-        "name":    item.get("name", ""),
+        "name": item.get("name", ""),
     }
 
 
@@ -54,7 +64,7 @@ class MainWindow(QMainWindow):
         self._sync.error.connect(self._show_error_banner)
 
         self._cards: list = []
-        self._card_index: dict = {}   # item_id -> card  O(1)
+        self._card_index: dict = {}  # item_id -> card  O(1)
         self._refresh_timer = None
         self._remaining = 0
         self._is_best_mode = False
@@ -64,6 +74,7 @@ class MainWindow(QMainWindow):
 
         # Кэш последних 3 категорий
         from collections import deque
+
         self._cat_cache: deque = deque(maxlen=3)
         self._current_cat_key: str | None = None
         self._skeleton: SkeletonOverlay | None = None
@@ -82,7 +93,7 @@ class MainWindow(QMainWindow):
             if data.get("is_best") or data.get("is_favorites"):
                 continue
             cat_key = data["cat_key"]
-            
+
             # Поддержка прямых категорий (is_direct)
             if data.get("is_direct"):
                 items = data.get("items", [])
@@ -90,11 +101,13 @@ class MainWindow(QMainWindow):
                     real_id = item.get("item_id") or item.get("id", "")
                     if real_id not in seen:
                         seen.add(real_id)
-                        result.append({
-                            "item_id": real_id,
-                            "name":    item.get("name", ""),
-                            "cat_key": cat_key,
-                        })
+                        result.append(
+                            {
+                                "item_id": real_id,
+                                "name": item.get("name", ""),
+                                "cat_key": cat_key,
+                            }
+                        )
             else:
                 # Обычные категории с подкатегориями
                 for items in data.get("subcategories", {}).values():
@@ -102,11 +115,13 @@ class MainWindow(QMainWindow):
                         real_id = item.get("item_id") or item.get("id", "")
                         if real_id not in seen:
                             seen.add(real_id)
-                            result.append({
-                                "item_id": real_id,
-                                "name":    item.get("name", ""),
-                                "cat_key": cat_key,
-                            })
+                            result.append(
+                                {
+                                    "item_id": real_id,
+                                    "name": item.get("name", ""),
+                                    "cat_key": cat_key,
+                                }
+                            )
         return result
 
     # ── Построение UI ─────────────────────────────────────────────────────
@@ -151,8 +166,12 @@ class MainWindow(QMainWindow):
         icon_lbl.setStyleSheet("background: transparent;")
         raw = QPixmap(asset_path("assets", "app_icon.ico"))
         if not raw.isNull():
-            img = raw.scaled(36, 36, Qt.AspectRatioMode.KeepAspectRatio,
-                             Qt.TransformationMode.SmoothTransformation).toImage()
+            img = raw.scaled(
+                36,
+                36,
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation,
+            ).toImage()
             img = img.convertToFormat(QImage.Format.Format_ARGB32)
             for y in range(img.height()):
                 for x in range(img.width()):
@@ -183,7 +202,11 @@ class MainWindow(QMainWindow):
                 font.setLetterSpacing(QFont.SpacingType.AbsoluteSpacing, 1.5)
                 p.setFont(font)
                 p.setPen(QColor(255, 255, 255))
-                p.drawText(self_.rect(), Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft, self_.text())
+                p.drawText(
+                    self_.rect(),
+                    Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft,
+                    self_.text(),
+                )
                 p.end()
 
         title = NeonLabel("RefugeX")
@@ -211,7 +234,9 @@ class MainWindow(QMainWindow):
         crash_btn.clicked.connect(self._open_crash_log)
         row.addWidget(crash_btn)
 
-        self._theme_btn = QPushButton("🎨 " + THEMES[theme_manager.get_theme_key()]["name"])
+        self._theme_btn = QPushButton(
+            "🎨 " + THEMES[theme_manager.get_theme_key()]["name"]
+        )
         self._theme_btn.setObjectName("themeBtn")
         self._theme_btn.setFixedHeight(32)
         self._theme_btn.clicked.connect(self._show_theme_menu)
@@ -226,10 +251,14 @@ class MainWindow(QMainWindow):
     def _open_crash_log(self):
         from app_paths import app_path
         import os, subprocess
+
         log_path = app_path("crash.log")
         if not os.path.exists(log_path):
             from PyQt6.QtWidgets import QMessageBox
-            QMessageBox.information(self, "Журнал ошибок", "Журнал пуст — ошибок не зафиксировано.")
+
+            QMessageBox.information(
+                self, "Журнал ошибок", "Журнал пуст — ошибок не зафиксировано."
+            )
             return
         subprocess.Popen(["notepad.exe", log_path])
 
@@ -269,6 +298,7 @@ class MainWindow(QMainWindow):
     def _apply_theme(self, key: str):
         from ui.compare_window import CompareWindow
         from ui.craft_detail_window import _open_windows
+
         theme_manager.set_theme(key)
         config._refresh()
         self.setStyleSheet(build_style())
@@ -395,9 +425,13 @@ class MainWindow(QMainWindow):
             }}
         """)
         if hasattr(self, "_count_lbl"):
-            self._count_lbl.setStyleSheet(f"color: {config.MUTED_COLOR}; font-size: 11px;")
+            self._count_lbl.setStyleSheet(
+                f"color: {config.MUTED_COLOR}; font-size: 11px;"
+            )
         if hasattr(self, "_filter_count_lbl"):
-            self._filter_count_lbl.setStyleSheet(f"color: {config.ACCENT_COLOR}; font-size: 11px;")
+            self._filter_count_lbl.setStyleSheet(
+                f"color: {config.ACCENT_COLOR}; font-size: 11px;"
+            )
 
     # ── Загрузка категории ────────────────────────────────────────────────
 
@@ -442,7 +476,9 @@ class MainWindow(QMainWindow):
         if is_best:
             self._set_status("⏳ Загружаю данные по всем предметам...")
             load_items = self._all_items
-            self._pending_items = [(item, item.get("cat_key", cat_key)) for item in load_items]
+            self._pending_items = [
+                (item, item.get("cat_key", cat_key)) for item in load_items
+            ]
             target_ids = [i["item_id"] for i in load_items]
 
         elif self._current_is_favorites:
@@ -495,9 +531,9 @@ class MainWindow(QMainWindow):
             self._cards_layout.removeWidget(card)
             card.hide()
         snapshot = {
-            "cards":      list(self._cards),
+            "cards": list(self._cards),
             "card_index": dict(self._card_index),
-            "is_best":    self._is_best_mode,
+            "is_best": self._is_best_mode,
             "is_favorites": self._current_is_favorites,
         }
         self._evict_old_cache()
@@ -539,6 +575,7 @@ class MainWindow(QMainWindow):
 
     def _load_cards_batch(self):
         import logging
+
         BATCH_SIZE = 15
 
         if not self._pending_items:
@@ -563,7 +600,9 @@ class MainWindow(QMainWindow):
             if self._is_best_mode:
                 card.setVisible(False)
 
-            card._star_btn.toggled.connect(lambda _, c=card: self._on_favorite_toggled(c))
+            card._star_btn.toggled.connect(
+                lambda _, c=card: self._on_favorite_toggled(c)
+            )
             self._cards.append(card)
             self._card_index[card.item_id] = card
             self._cards_layout.insertWidget(self._cards_layout.count() - 1, card)
@@ -676,7 +715,7 @@ class MainWindow(QMainWindow):
         # Не показываем счётчики в режиме калькулятора
         if self._calculator_widget and self._calculator_widget.isVisible():
             return
-            
+
         total = len(self._cards)
 
         if self._current_is_favorites:
